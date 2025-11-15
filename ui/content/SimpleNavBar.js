@@ -5,10 +5,9 @@ import {PageContext} from "./Page";
 /**
  * Simple navigation bar, top level only.
  *
- * @param props
  * @constructor
  */
-export default function SimpleNavBar(props) {
+export default function SimpleNavBar() {
 
   const {outlineData} = useContext(SiteContext);
   const {pageData, setPageId} = useContext(PageContext);
@@ -18,7 +17,7 @@ export default function SimpleNavBar(props) {
       {outlineData && outlineData.map(page => (
         <span
           key={page.PageID}
-          className={'navitem' + (page.PageID === pageData.PageID ? ' current' : '')}
+          className={'navitem' + (page.PageID === pageData?.PageID ? ' current' : '')}
           onClick={() => setPageId(page.PageID)}
         >
           {page.NavTitle}
