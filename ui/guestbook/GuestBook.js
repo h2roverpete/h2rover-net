@@ -1,12 +1,14 @@
-import {useEffect, useState, memo} from "react";
+import {useEffect, useState, memo, useContext} from "react";
 import GuestFields from "./GuestFields";
 import GuestFeedbackFields from "./GuestFeedbackFields";
+import {SiteContext} from "../content/Site";
+import {PageContext} from "../content/Page";
 
 /**
  * @typedef GuestBookProps
  *
- * @property {Api} api                    API to guest book server.
  * @property {number} guestBookId         Guest book ID.
+ * @property {number} pageId              Page ID to display the guest book on.
  * @property {number} guestId             Guest ID to populate fields with.
  * @property {number} guestFeedbackId     Guest Feedback ID to populate fields with.
  * @property {DataCallback} [onChange]    Receives notification that guest ID or guest feedback ID was updated
@@ -19,6 +21,9 @@ import GuestFeedbackFields from "./GuestFeedbackFields";
  */
 function GuestBook(props) {
 
+  const {pageData} = useContext(PageContext);
+  const {restApi} = useContext(SiteContext);
+
   // guest book configuration
   const [guestBookConfig, setGuestBookConfig] = useState(null);
 
@@ -29,22 +34,21 @@ function GuestBook(props) {
   // has form been submitted?
   const [submitted, setSubmitted] = useState(false);
 
-  console.log(`Rendering guest book. guestData=${JSON.stringify(guestData)}, guestFeedback=${JSON.stringify(guestFeedbackData)}, submitted=${submitted}`);
-
   // load guest book configuration when initialized
   useEffect(() => {
     if (props.guestBookId) {
-      props.api.getGuestBook(props.guestBookId).then(data => {
+      restApi?.getGuestBook(props.guestBookId).then(data => {
+        console.debug(`Guest book config loaded.`);
         setGuestBookConfig(data);
       }).catch(error => {
         console.error(`Error getting guest book: ${error}`);
       })
     }
-  }, [props.guestBookId, props.api])
+  }, [props.guestBookId, restApi])
 
   useEffect(() => {
     if (props.guestId) {
-      props.api.getGuest(props.guestId).then(data => {
+      restApi?.getGuest(props.guestId).then(data => {
         setGuestData(prevData => {
           return {
             ...prevData,
@@ -55,11 +59,11 @@ function GuestBook(props) {
         console.error(`Error getting guest data: ${error}`);
       })
     }
-  }, [props.guestId, props.guestBookId, props.api])
+  }, [props.guestId, props.guestBookId, restApi])
 
   useEffect(() => {
     if (props.guestFeedbackId) {
-      props.api.getGuestFeedback(props.guestFeedbackId).then(data => {
+      restApi.getGuestFeedback(props.guestFeedbackId).then(data => {
         setGuestFeedbackData(prevData => {
           return {
             ...prevData,
@@ -70,8 +74,7 @@ function GuestBook(props) {
         console.error(`Error getting feedback data: ${error}`);
       })
     }
-  }, [props.guestFeedbackId, props.api])
-
+  }, [props.guestFeedbackId, restApi])
 
   /**
    * Handle changes in response to data entry.
@@ -122,18 +125,18 @@ function GuestBook(props) {
   function handleSubmit(e) {
     e.preventDefault();
     console.debug(`Updating guest. data=${JSON.stringify(guestData)}`);
-    props.api.insertOrUpdateGuest(props.guestBookId, guestData).then(data => {
+    restApi.insertOrUpdateGuest(props.guestBookId, guestData).then(data => {
       console.debug(`Guest update result: ${JSON.stringify(data)}`);
       setSubmitted(true)
       props.onChange?.({name: 'guestId', value: data.GuestID});
-      props.api.insertOrUpdateGuestFeedback(data.GuestID, guestFeedbackData).then(data => {
+      restApi.insertOrUpdateGuestFeedback(data.GuestID, guestFeedbackData).then(data => {
         console.debug(`Guest feedback update result: ${JSON.stringify(data)}`);
       })
     })
   }
 
   return (
-    <> {guestBookConfig && (
+    <> {props.pageId === pageData?.PageID && guestBookConfig && (
       <div className="guestbook">
         {submitted ? (
           <>
