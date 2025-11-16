@@ -3,6 +3,7 @@ import GuestFields from "./GuestFields";
 import GuestFeedbackFields from "./GuestFeedbackFields";
 import {SiteContext} from "../content/Site";
 import {PageContext} from "../content/Page";
+import './GuestBook.css'
 
 /**
  * @typedef GuestBookProps
@@ -13,6 +14,7 @@ import {PageContext} from "../content/Page";
  * @property {number} guestFeedbackId     Guest Feedback ID to populate fields with.
  * @property {DataCallback} [onChange]    Receives notification that guest ID or guest feedback ID was updated
  */
+
 /**
  * Guest Book component
  * @param props {GuestBookProps}
