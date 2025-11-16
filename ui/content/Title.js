@@ -1,20 +1,17 @@
+import {useContext} from "react";
+import {PageContext} from "./Page";
+
 /**
  * Component to show page title
  *
  * Class: an <h1> element with class name "title"
  *
- * @param pageData{PageData|SiteData}
  * @returns {JSX.Element}
  * @constructor
  */
-function Title({pageData}) {
-    return (
-        <>
-            {pageData && pageData.ShowTitle && (
-                <h1 className="title">{pageData && pageData.PageTitle}</h1>
-            )}
-        </>
-    )
+export default function Title() {
+  const {pageData} = useContext(PageContext)
+  return (
+        <h1 className="title Title">{pageData ? pageData.PageTitle : (<>&nbsp;</>)}</h1>
+  )
 }
-
-export default Title;

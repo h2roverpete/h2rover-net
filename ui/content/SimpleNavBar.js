@@ -9,16 +9,17 @@ import {PageContext} from "./Page";
  */
 export default function SimpleNavBar() {
 
-  const {outlineData} = useContext(SiteContext);
+  const {outlineData, getChildren} = useContext(SiteContext);
   const {pageData, setPageId} = useContext(PageContext);
 
   return (
-    <div className="navbar">
-      {outlineData && outlineData.map(page => (
+    <div className="SimpleNavBar Navbar">
+      {outlineData && getChildren(0).map(page => (
         <span
           key={page.PageID}
-          className={'navitem' + (page.PageID === pageData?.PageID ? ' current' : '')}
+          className={'NavItem' + (page.PageID === pageData?.PageID ? ' current' : '')}
           onClick={() => setPageId(page.PageID)}
+          style={{cursor:'pointer'}}
         >
           {page.NavTitle}
         </span>

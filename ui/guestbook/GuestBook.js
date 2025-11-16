@@ -38,11 +38,11 @@ function GuestBook(props) {
   useEffect(() => {
     if (props.guestBookId) {
       restApi?.getGuestBook(props.guestBookId).then(data => {
-        console.debug(`Guest book config loaded.`);
+        console.debug(`Loaded guest book ${props.guestBookId}.`);
         setGuestBookConfig(data);
       }).catch(error => {
-        console.error(`Error getting guest book: ${error}`);
-      })
+        console.error(`Error loading guest book: ${error}`);
+      });
     }
   }, [props.guestBookId, restApi])
 
@@ -57,7 +57,7 @@ function GuestBook(props) {
         });
       }).catch(error => {
         console.error(`Error getting guest data: ${error}`);
-      })
+      });
     }
   }, [props.guestId, props.guestBookId, restApi])
 
@@ -72,7 +72,7 @@ function GuestBook(props) {
         });
       }).catch(error => {
         console.error(`Error getting feedback data: ${error}`);
-      })
+      });
     }
   }, [props.guestFeedbackId, restApi])
 

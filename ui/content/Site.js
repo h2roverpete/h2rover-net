@@ -1,5 +1,8 @@
 import {createContext, useEffect, useState} from 'react';
+import ReactGA from 'react-ga4';
 
+// In your main component or at the application entry point
+ReactGA.initialize('YOUR_GA_MEASUREMENT_ID');
 export const SiteContext = createContext({
   restApi: null,
   siteData: null,
@@ -11,6 +14,7 @@ export const SiteContext = createContext({
  * @typedef SiteProps
  *
  * @property {RestAPI} restApi
+ * @property {string} googleId          Id for Google tracking tag.
  * @property {[JSX.Element]} children
  */
 
@@ -26,6 +30,10 @@ function Site(props) {
   const [siteData, setSiteData] = useState(null);
   const [outlineData, setOutlineData] = useState(null);
 
+  if (props.googleId) {
+    ReactGA.initialize(props.googleId);
+  }
+
   /**
    * Use the site outline to get child pages.
    * Provided as a utility for users of the Site context.
@@ -38,7 +46,7 @@ function Site(props) {
     const result = [];
     if (outlineData) {
       outlineData.map((item) => {
-        if (item.ParentID === pageId && (!item.PageHidden || showHidden)) {
+        if (item.ParentID === pageId && ((!item.PageHidden) || showHidden)) {
           result.push(item);
         }
         return item;
@@ -51,8 +59,10 @@ function Site(props) {
     if (!siteData) {
       // load site data
       props.restApi?.getSite().then((data) => {
-        console.debug(`Site config loaded.`);
+        console.debug(`Loaded site ${data.SiteID}.`);
         setSiteData(data);
+      }).catch(error => {
+        console.error(`Error loading site: ${error}`);
       })
     }
   }, [props.restApi, siteData]);
@@ -61,7 +71,7 @@ function Site(props) {
     if (!outlineData) {
       // load site outline
       props.restApi?.getSiteOutline().then((data) => {
-        console.debug(`Site outline loaded.`);
+        console.debug(`Loaded site outline.`);
         setOutlineData(data);
       })
     }
@@ -69,10 +79,12 @@ function Site(props) {
 
   // provide context to children
   return (
-    <SiteContext
-      value={{restApi: props.restApi, siteData: siteData, outlineData: outlineData, 'getChildren': getChildren}}>
-      {props.children}
-    </SiteContext>
+    <div className="Site">
+      <SiteContext
+        value={{restApi: props.restApi, siteData: siteData, outlineData: outlineData, 'getChildren': getChildren}}>
+        {props.children}
+      </SiteContext>
+    </div>
   )
 }
 

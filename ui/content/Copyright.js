@@ -10,15 +10,15 @@ import {SiteContext} from "./Site";
  * @returns {JSX.Element}
  * @constructor
  */
-function Copyright() {
+function Copyright(props) {
 
     const {siteData} = useContext(SiteContext);
 
     return (
         <>
           {siteData && (
-              <div className="copyright">
-                  &copy; {new Date().getFullYear()} {siteData.SiteName}. All rights reserved.
+              <div className="Copyright">
+                  &copy;{props.startYear?props.startYear:''}-{new Date().getFullYear()} {siteData.SiteName}. All rights reserved.
               </div>
           )}
         </>

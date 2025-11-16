@@ -21,13 +21,11 @@ export default function Page(props) {
     const params = new URLSearchParams(window.location.search);
     let id = parseInt(params.get('pageid'));
     if (id > 0) {
-      console.debug(`Setting page ${id} from URL.`);
-      setPageId(id);
+      setter(id);
     } else if (outlineData && outlineData.length) {
       // find the first page in the site outline
       const defaultPageId = outlineData[0].PageID
-      console.debug(`Setting page ${defaultPageId} from outline.`);
-      setPageId(defaultPageId);
+      setter(defaultPageId);
     }
   }
 
@@ -35,7 +33,7 @@ export default function Page(props) {
     if (pageId && !pageData) {
       // load specific page ID
       restApi?.getPage(pageId).then((data) => {
-        console.debug(`Page data loaded.`);
+        console.debug(`Loaded page ${pageId}.`);
         setPageData(data);
       })
     }
@@ -45,7 +43,7 @@ export default function Page(props) {
     if (pageId && !sectionData) {
       // load page sections
       restApi?.getPageSections(pageId).then((data) => {
-        console.debug(`Page sections loaded.`);
+        console.debug(`Loaded page ${pageId} sections.`);
         setSectionData(data);
       })
     }
@@ -57,6 +55,7 @@ export default function Page(props) {
    * @param pageId {number} new pgae ID.
    */
   function setter(pageId) {
+    console.debug(`Set page ID to ${pageId}.`);
     setPageId(pageId);
     setPageData(null);
     setSectionData(null);
@@ -64,8 +63,10 @@ export default function Page(props) {
 
   // provide context to children
   return (
-    <PageContext value={{pageData: pageData, sectionData: sectionData, 'setPageId': setter}}>
-      {props.children}
-    </PageContext>
+    <div className="Page">
+      <PageContext value={{pageData: pageData, sectionData: sectionData, 'setPageId': setter}}>
+        {props.children}
+      </PageContext>
+    </div>
   );
 }
