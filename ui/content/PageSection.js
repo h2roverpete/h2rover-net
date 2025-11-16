@@ -4,10 +4,9 @@
  * @param siteData{SiteData}
  * @constructor
  */
-function Section({sectionData}) {
+function PageSection({sectionData}) {
 
   const imageDivStyle = {};
-  let imageDivClass = '';
   const imageStyle = {};
   if (sectionData.ImagePosition === 'beside') {
     imageDivStyle.position = 'relative';
@@ -17,7 +16,8 @@ function Section({sectionData}) {
   } else {
     imageDivStyle.display = 'flex';
     imageDivStyle.justifyContent = 'center';
-    imageDivStyle.marginBottom = '20px';
+    imageDivStyle.alignItems = 'center';
+    imageDivStyle.marginBottom = '10px';
   }
   if (sectionData.HideImageFrame) {
     imageStyle.border='none';
@@ -26,24 +26,21 @@ function Section({sectionData}) {
 
   return (
     <div
-      className={`section`}
-      style={{
-        marginBottom: '20px'
-      }}
+      className={`PageSection`}
     >
       {sectionData.SectionTitle && sectionData.ShowTitle && (
         <h2
-          className={'text-' + sectionData.TitleAlign}
+          className={'SectionTitle text-' + sectionData.TitleAlign}
           dangerouslySetInnerHTML={{__html: sectionData.SectionTitle}}
         />
       )}
       {sectionData.SectionImage && sectionData.ShowImage && (
         <div
           style={imageDivStyle}
-          className={imageDivClass}
+          className="SectionImage"
         >
           <img
-            className="section-image img-fluid"
+            className="img-fluid"
             style={imageStyle}
             src={'images/' + sectionData.SectionImage}
             alt={sectionData.SectionTitle}
@@ -52,7 +49,7 @@ function Section({sectionData}) {
       )}
       {sectionData.SectionText && sectionData.SectionText.length && sectionData.ShowText && (
         <div
-          className={`page-section text-${sectionData.TextAlign}`}
+          className={`SectionText text-${sectionData.TextAlign}`}
           dangerouslySetInnerHTML={{__html: sectionData.SectionText}}
         />
       )}
@@ -60,4 +57,4 @@ function Section({sectionData}) {
   );
 }
 
-export default Section;
+export default PageSection;

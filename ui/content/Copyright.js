@@ -22,7 +22,8 @@ function Copyright(props) {
 
   return (
     <div className="Copyright">
-      &copy;{props.startYear ? `${props.startYear}-` : ''}{new Date().getFullYear()} {siteData?.SiteName}. All rights
+      &copy;{props.startYear ? `${props.startYear}-` : ''}{new Date().getFullYear()} {siteData?.SiteName}.<br/>All
+      rights
       reserved.
     </div>
   )

@@ -1,4 +1,4 @@
-import Section from './Section';
+import PageSection from './PageSection';
 import React, {useContext} from "react";
 import {PageContext} from "./Page";
 import PageTitle from "./PageTitle";
@@ -11,17 +11,17 @@ import PageTitle from "./PageTitle";
  * @param children{[JSX.Element]}   Elements to add at the end of page content.
  * @constructor
  */
-export default function Content({children}) {
+export default function PageContent({children}) {
 
   const {pageData, sectionData} = useContext(PageContext);
 
   return (
-    <div className="Content">
+    <div className="PageContent">
       <PageTitle/>
       {pageData && sectionData && (
         <div style={{padding: '0'}}>
           {pageData && sectionData && sectionData.map(section => (
-            <Section sectionData={section} key={section.PageSectionID}/>
+            <PageSection sectionData={section} key={section.PageSectionID}/>
           ))}
           {children}
         </div>

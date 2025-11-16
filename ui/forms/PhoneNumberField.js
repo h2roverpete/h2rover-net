@@ -20,8 +20,7 @@ function PhoneNumberField({name, id, value, onChange}) {
     <PhoneInput
       inputProps={{
         name: name,
-        required: false,
-        autoFocus: true
+        required: false
       }}
       value={value}
       country={'us'}

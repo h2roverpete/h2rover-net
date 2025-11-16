@@ -50,18 +50,17 @@ export default function Gallery(props) {
   if (galleryPhotos) {
     for (const photo of galleryPhotos) {
       images.push({
-        original: `${process.env.PUBLIC_URL}/images/gallery/${photo.SubDirectory.toString().padStart(3,'0')}/${photo.PhotoLarge}`,
-        thumbnail: `${process.env.PUBLIC_URL}/images/gallery/${photo.SubDirectory.toString().padStart(3,'0')}/${photo.PhotoSmall}`,
-        originalAlt: photo.PhotoDescription,
-        thumbnailAlt: photo.PhotoDescription,
-        description: photo.PhotoDescription,
+        original: `${process.env.PUBLIC_URL}/images/gallery/${photo.SubDirectory.toString().padStart(3, '0')}/${photo.PhotoLarge}`,
+        thumbnail: `${process.env.PUBLIC_URL}/images/gallery/${photo.SubDirectory.toString().padStart(3, '0')}/${photo.PhotoSmall}`,
       })
     }
   }
 
   return (
     <>{pageData?.PageID === props.pageId && images.length > 0 && (
-      <ImageGallery items={images}/>
+      <div className="Gallery">
+        <ImageGallery items={images}/>
+      </div>
     )}</>
   )
 }
