@@ -37,7 +37,7 @@ function CustomFields({guestBookConfig, feedbackData, onChange}) {
           required: guestBookConfig[`Custom${i}Required`],
           options: options,
           emptyLabel: guestBookConfig[`Custom${i}EmptyLabel`],
-          value: eval(`feedbackData?.Custom${i}`)
+          value: feedbackData?.[`Custom${i}`]
         })
       }
     }
