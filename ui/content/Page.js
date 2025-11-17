@@ -3,6 +3,7 @@ import {SiteContext} from "./Site";
 
 export const PageContext = createContext(
   {
+    pageID: null,
     pageData: null,
     sectionData: null,
     setPageId: (pageId) => console.warn(`setPageId not defined.`)
@@ -64,7 +65,7 @@ export default function Page(props) {
   // provide context to children
   return (
     <div className="Page">
-      <PageContext value={{pageData: pageData, sectionData: sectionData, 'setPageId': setter}}>
+      <PageContext value={{pageId: pageId, pageData: pageData, sectionData: sectionData, 'setPageId': setter}}>
         {props.children}
       </PageContext>
     </div>
