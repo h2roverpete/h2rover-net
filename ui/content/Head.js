@@ -15,7 +15,7 @@ export default function Head() {
   const {pageData} = useContext(PageContext);
   const {siteData} = useContext(SiteContext);
 
-  const title = pageData ? pageData.PageMetaTitle ? pageData.PageMetaTitle : `${siteData.SiteName} - ${pageData.PageTitle}` : `Loading...`;
+  const title = pageData && siteData ? pageData.PageMetaTitle ? pageData.PageMetaTitle : `${siteData.SiteName} - ${pageData.PageTitle}` : `Loading...`;
 
   return (
     <>
