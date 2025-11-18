@@ -1,5 +1,6 @@
 import {createContext, useEffect, useState} from 'react';
 import ReactGA from 'react-ga4';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // In your main component or at the application entry point
 ReactGA.initialize('YOUR_GA_MEASUREMENT_ID');
