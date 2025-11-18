@@ -4,6 +4,19 @@ import {PageContext} from "./Page";
 import Navbar from 'react-bootstrap/Navbar';
 import {Container, Nav, NavDropdown} from "react-bootstrap";
 
+/**
+ * @typedef NavBarProps
+ *
+ * @property {String} [brand]   Explicit brrand, otherwise the Site name will be used.
+ * @property {Image} [icon]     Logo icon for branding.
+ */
+/**
+ * Full-blown Boostrap navbar for hierarchical navigation.
+ *
+ * @param props{NavBarProps}
+ * @returns {JSX.Element}
+ * @constructor
+ */
 export default function NavBar(props) {
 
   const {siteData, outlineData, getChildren} = useContext(SiteContext);
@@ -11,7 +24,7 @@ export default function NavBar(props) {
 
   function RecursiveDropdown(props) {
     return (
-      <NavDropdown title={props.pageData.NavTitle} id="basic-nav-dropdown">
+      <NavDropdown title={props.pageData.NavTitle ? props.pageData.NavTitle : props.pageData.PageTitle} id="basic-nav-dropdown">
         <>{getChildren(props.pageData.PageID).map((item) => (
           <>{item.HasChildren ? (
             <RecursiveDropdown pageData={item}/>
@@ -19,9 +32,10 @@ export default function NavBar(props) {
             <NavDropdown.Item
               data-bs-toggle="collapse"
               data-bs-target=".navbar-collapse.show"
+              key={item.PageID}
               onClick={() => setPageId(item.PageID)}
             >
-              {item.NavTitle}
+              {item.NavTitle ? item.NavTitle : item.PageTitle}
             </NavDropdown.Item>
           )}</>
         ))}</>
@@ -29,16 +43,14 @@ export default function NavBar(props) {
     );
   }
 
-  const children = getChildren?.(0);
-  console.debug(`Navbar found ${children.length} items.`);
   return (
     <>
       {outlineData && (
         <Navbar
-          expand="sm"
+          expand={props.expand ? props.expand : 'md'}
           className="NavBar"
-          data-bs-theme="dark"
-          fixed="top"
+          data-bs-theme={props.theme ? props.theme : "light"}
+          fixed={props.fixed ? props.fixed : undefined}
         >
           <Container className="NavBarContents">
             <Navbar.Brand href={'#'} onClick={() => {
@@ -47,16 +59,14 @@ export default function NavBar(props) {
               <>{props.icon && (
                 <img
                   src={props.icon}
-                  alt={siteData?.SiteName}
+                  alt={props.brand ? props.brand : siteData?.SiteName}
                   height={45}
                   style={{marginRight: '10px'}}
                 />
               )}</>
-              <span className={'NavBarBrand'}>{props.brand && (
-                <>
-                  {props.brand}
-                </>
-              )}</span>
+              <span className={'NavBarBrand'}>
+                  {props.brand ? props.brand : siteData?.SiteName}
+              </span>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="MainNavigation">
@@ -66,9 +76,10 @@ export default function NavBar(props) {
                     <RecursiveDropdown pageData={item}/>
                   ) : (
                     <Nav.Link
+                      key={item.PageID}
                       onClick={() => setPageId(item.PageID)}
                     >
-                      {item.NavTitle}
+                      {item.NavTitle ? item.NavTitle : item.PageTitle}
                     </Nav.Link>
                   )}</>
                 ))}
