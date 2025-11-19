@@ -24,7 +24,8 @@ export default function NavBar(props) {
 
   function RecursiveDropdown(props) {
     return (
-      <NavDropdown title={props.pageData.NavTitle ? props.pageData.NavTitle : props.pageData.PageTitle} id="basic-nav-dropdown">
+      <NavDropdown title={props.pageData.NavTitle ? props.pageData.NavTitle : props.pageData.PageTitle}
+                   id="basic-nav-dropdown">
         <>{getChildren(props.pageData.PageID).map((item) => (
           <>{item.HasChildren ? (
             <RecursiveDropdown pageData={item}/>
@@ -52,31 +53,34 @@ export default function NavBar(props) {
           data-bs-theme={props.theme ? props.theme : "light"}
           fixed={props.fixed ? props.fixed : undefined}
         >
-          <Container className="NavBarContents">
-            <Navbar.Brand href={'#'} onClick={() => {
-              setPageId(outlineData?.[0].PageID)
-            }}>
-              <>{props.icon && (
-                <img
-                  src={props.icon}
-                  alt={typeof props.brand === 'string' ? props.brand : siteData?.SiteName}
-                  height={45}
-                  style={{marginRight: '10px'}}
-                />
-              )}</>
-              <span className={'NavBarBrand'}>
+          <div className="NavBarContents">
+            <>{(props.brand || props.icon) && (
+              <Navbar.Brand href={'#'} onClick={() => {
+                setPageId(outlineData?.[0].PageID)
+              }}>
+                <>{props.icon && (
+                  <img
+                    src={props.icon}
+                    alt={typeof props.brand === 'string' ? props.brand : siteData?.SiteName}
+                    height={45}
+                    style={{marginRight: '10px'}}
+                  />
+                )}</>
+                <span className={'NavBarBrand'}>
                   {typeof props.brand === 'string' ? props.brand : siteData?.SiteName}
               </span>
-            </Navbar.Brand>
+              </Navbar.Brand>
+            )}</>
+
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse id="MainNavigation">
-              <Nav className="me-auto">
+              <Nav>
                 {getChildren(0).map((item) => (
                   <>{item.HasChildren ? (
                     <RecursiveDropdown pageData={item}/>
                   ) : (
                     <Nav.Link
-                      className={"NavItem"}
+                      className={`NavItem${pageData?.PageID === item.PageID ? ' active' : ''}`}
                       key={item.PageID}
                       onClick={() => setPageId(item.PageID)}
                     >
@@ -86,7 +90,7 @@ export default function NavBar(props) {
                 ))}
               </Nav>
             </Navbar.Collapse>
-          </Container>
+          </div>
         </Navbar>
       )}
     </>
