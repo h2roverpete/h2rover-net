@@ -18,7 +18,7 @@ import {InstagramEmbed} from "react-social-media-embed";
 export default function Instagram(props) {
   const {pageData} = useContext(PageContext);
   return (
-    <>{props.pageId === pageData.PageID && (
+    <>{props.pageId === pageData?.PageID && (
         <InstagramEmbed url={props.url} width={'100%'}/>
     )}</>
   );

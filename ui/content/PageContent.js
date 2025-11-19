@@ -1,8 +1,3 @@
-import PageSection from './PageSection';
-import React, {useContext} from "react";
-import {PageContext} from "./Page";
-import PageTitle from "./PageTitle";
-
 /**
  * Element to show page content
  *
@@ -13,19 +8,9 @@ import PageTitle from "./PageTitle";
  */
 export default function PageContent({children}) {
 
-  const {pageData, sectionData} = useContext(PageContext);
-
   return (
     <div className="PageContent">
-      <PageTitle/>
-      {pageData && sectionData && (
-        <>
-          {pageData && sectionData && sectionData.map(section => (
-            <PageSection sectionData={section} key={section.PageSectionID}/>
-          ))}
-          {children}
-        </>
-      )}
+      {children}
     </div>
   )
 }

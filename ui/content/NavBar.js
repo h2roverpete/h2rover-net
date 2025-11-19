@@ -31,6 +31,7 @@ export default function NavBar(props) {
             <RecursiveDropdown pageData={item}/>
           ) : (
             <NavDropdown.Item
+              className={`${pageData?.PageID === item.PageID ? ' active' : ''}`}
               key={item.PageID}
               onClick={() => setPageId(item.PageID)}
             >
@@ -53,7 +54,7 @@ export default function NavBar(props) {
           data-bs-theme={props.theme ? props.theme : "light"}
           fixed={props.fixed ? props.fixed : undefined}
         >
-          <div className="NavBarContents">
+          <div className="NavBarContents container">
             <>{(props.brand || props.icon) && (
               <Navbar.Brand href={'#'} onClick={() => {
                 setPageId(outlineData?.[0].PageID)
