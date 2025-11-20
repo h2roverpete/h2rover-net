@@ -43,7 +43,7 @@ export default function App() {
   console.debug(`Outline: ${JSON.stringify(siteOutline)}`);
 
   return (
-    <Site restApi={restApi} googleId={''}>
+    <Site restApi={restApi} googleId={'G-L4CKYJ846Z'}>
       <Page>
         <Head/>
         <Logo/>

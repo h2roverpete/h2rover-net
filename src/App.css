@@ -46,6 +46,7 @@
 .navbar .navbar-toggler {
   border-color: white;
   margin-bottom:10px;
+  margin-left:10px;
 }
 
 /* Navbar dropdown submenus */
@@ -97,14 +98,19 @@ div.PageContent {
 /* Main title */
 h1.PageTitle {
   color: #407cbf;
-  font-size: 24pt;
+  font-size: 20pt;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 /* Subheads */
 h2.SectionTitle {
-  font-size: 18pt;
+  font-size: 16pt;
   color: #407cbf;
+}
+
+.PageSection {
+  margin-bottom:20px;
 }
 
 .SectionText {
@@ -160,6 +166,7 @@ input.btn-primary:hover {
 @media (max-width: 768px) {
   div.PageContent {
     border-radius: 0;
+    padding: 15px;
   }
 }
 
@@ -169,7 +176,7 @@ input.btn-primary:hover {
     width: 100vw;
   }
   .navbar .navbar-nav .nav-link {
-    margin-left: 0;
+    margin-left: 10px;
   }
 }
 
