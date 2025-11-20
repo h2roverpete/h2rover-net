@@ -21,4 +21,7 @@ body {
   flex-direction: column;
   align-items: center;
   flex:1;
+  background-color: #407cbf;
+  background-image: url('./assets/wave.png');
+  background-repeat: repeat-x;
 }

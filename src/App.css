@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   flex: 1;
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 /* Middle content section, add width constraints here */
@@ -17,9 +18,11 @@
   max-width: 768px; /** bootstrap lg boundary */
 }
 
+.Logo {
+  margin: 20px 0 0 0;
+}
 /* Navigation bar outer container */
 .NavBar.navbar {
-  width: 100%;
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -28,10 +31,10 @@
 
 /* Navigation bar inner elements, allows for custom alignment/layout */
 .NavBarContents.container-fluid {
-  width: 100%;
   padding-left: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
+  /*border: 1px red solid;*/
 }
 
 /* Navbar branding text */
@@ -41,7 +44,8 @@
 
 /* Navbar dropdown button */
 .navbar .navbar-toggler {
-
+  border-color: white;
+  margin-bottom:10px;
 }
 
 /* Navbar dropdown submenus */
@@ -60,37 +64,63 @@ a.dropdown-item.active {
 }
 
 /* Navbar navigation links */
-.navbar .navbar-nav .nav-link,
-.navbar .navbar-nav .dropdown-menu .dropdown-item,
-.navbar .navbar-brand {
-
+.navbar .navbar-nav .nav-link {
+  font-size: 18pt;
+  text-shadow: 1px 1px 1px #000;
+  color: #bbddff;
+  margin: 0 15px;
+  white-space: nowrap;
 }
 
 /* Navbar current page in navigation links */
 .navbar .navbar-brand.active,
 .navbar .navbar-nav .nav-link.active,
 .navbar .navbar-nav .nav-link.show {
-
+  color: white;
 }
 
 /* Navbar link hover */
-.navbar a:hover {
-
+a.NavItem.nav-link:hover {
+  color: white;
 }
 
 /* Page content container, use flex:1 to fill page height */
-.PageContent {
+div.PageContent {
   background-color: white;
   flex: 1;
+  border-radius: 20px;
+  box-shadow: 2px 2px 8px #00000044;
+  padding: 30px;
+  font-size: 14pt;
 }
 
 /* Main title */
 h1.PageTitle {
+  color: #407cbf;
+  font-size: 24pt;
+  margin-bottom: 20px;
 }
 
 /* Subheads */
 h2.SectionTitle {
+  font-size: 18pt;
+  color: #407cbf;
+}
 
+.SectionText {
+  line-height: 180%;
+}
+
+.SectionText a,
+.SectionText a:active,
+.SectionText a:visited {
+  color: #407cbf;
+  text-decoration: none;
+}
+
+.SectionText a:hover {
+  color: #407cbf;
+  text-decoration: underline;
 }
 
 /* Uncontained list items need margin correction */
@@ -105,18 +135,44 @@ div.SectionText {
 
 /* Copyright notice */
 .Copyright {
-  margin: 10px 0;
+  margin: 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: end;
   text-align: center;
+  color: #b0d0f3;
+  line-height:120%;
+}
+
+/* Guest book submit button */
+input.btn-primary {
+  background-color: #4d94e3;
   color: white;
+}
+
+/* Guest book submit hover */
+input.btn-primary:hover {
+  background-color: #407cbf;
+  color: white;
+}
+
+/* up to bootstrap md width */
+@media (max-width: 768px) {
+  div.PageContent {
+    border-radius: 0;
+  }
 }
 
 /* bootstrap xs width */
 @media (max-width: 575px) {
-
+  .NavBarContents.container-fluid {
+    width: 100vw;
+  }
+  .navbar .navbar-nav .nav-link {
+    margin-left: 0;
+  }
 }
+
 
 /* bootstrap sm width */
 @media (min-width: 576px) {

@@ -7,10 +7,11 @@ import Page from "./framework/ui/content/Page";
 import PageContent from "framework/ui/content/PageContent";
 import NavBar from "framework/ui/content/NavBar";
 import {useContext} from "react";
-import icon from "./assets/icon.png";
 import Breadcrumbs from "framework/ui/content/Breadcrumbs";
 import PageTitle from "framework/ui/content/PageTitle";
 import PageSections from "framework/ui/content/PageSections";
+import GuestBook from "framework/ui/guestbook/GuestBook";
+import Logo from "./Logo";
 
 /**
  * Display navigation bar.
@@ -33,7 +34,7 @@ import PageSections from "framework/ui/content/PageSections";
 export default function App() {
 
   const restApi = new RestAPI(
-    1,
+    241,
     "https://dev.h2rover.net",
     "blahblahblah123"
   );
@@ -45,14 +46,15 @@ export default function App() {
     <Site restApi={restApi} googleId={''}>
       <Page>
         <Head/>
-        <NavBar icon={icon} expand={'sm'}/>
+        <Logo/>
+        <NavBar expand={'sm'} theme={'dark'}/>
         <PageContent>
           <Breadcrumbs/>
           <PageTitle/>
           <PageSections/>
-          {/*<GuestBook guestBookId={0} pageId={0}/>*/}
+          <GuestBook guestBookId={229} pageId={8678}/>
         </PageContent>
-        <Copyright startYear={'startYear'}/>
+        <Copyright startYear={'2010'}/>
       </Page>
     </Site>
   );
