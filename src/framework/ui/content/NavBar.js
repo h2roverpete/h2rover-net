@@ -7,8 +7,8 @@ import {Container, Nav, NavDropdown} from "react-bootstrap";
 /**
  * @typedef NavBarProps
  *
- * @property {String} [brand]   Explicit brrand, otherwise the Site name will be used.
- * @property {Image} [icon]     Logo icon for branding.
+ * @property {string} [brand]   Explicit brand, otherwise the Site name will be used.
+ * @property {string} [icon]     Logo icon for branding.
  */
 /**
  * Full-blown Boostrap navbar for hierarchical navigation.
@@ -28,6 +28,7 @@ export default function NavBar(props) {
       <>{children.length === 0 ? (
         <NavDropdown.Item
           id="basic-nav-dropdown"
+          key={props.pageData.PageID}
           onClick={() => {
             setPageId(props.pageData.PageID)
           }}
@@ -36,12 +37,13 @@ export default function NavBar(props) {
         </NavDropdown.Item>
       ) : (
         <NavDropdown
+          key={props.pageData.PageID}
           title={props.pageData.NavTitle ? props.pageData.NavTitle : props.pageData.PageTitle}
           id="basic-nav-dropdown"
         >
           <>{children.map((item) => (
             <>{item.HasChildren ? (
-              <RecursiveDropdown pageData={item}/>
+              <RecursiveDropdown key={item.PageID} pageData={item}/>
             ) : (
               <NavDropdown.Item
                 className={`${pageData?.PageID === item.PageID ? ' active' : ''}`}
@@ -96,7 +98,7 @@ export default function NavBar(props) {
           <Nav>
             {getChildren(0).map((item) => (
               <>{item.HasChildren ? (
-                <RecursiveDropdown pageData={item}/>
+                <RecursiveDropdown key={item.PageID} pageData={item}/>
               ) : (
                 <Nav.Link
                   className={`NavItem${pageData?.PageID === item.PageID ? ' active' : ''}`}
