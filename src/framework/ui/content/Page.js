@@ -44,7 +44,7 @@ export default function Page(props) {
     if (pageId && !sectionData) {
       // load page sections
       restApi?.getPageSections(pageId).then((data) => {
-        console.debug(`Loaded page ${pageId} sections.`);
+        console.debug(`Loaded page ${pageId} content.`);
         setSectionData(data);
       })
     }
