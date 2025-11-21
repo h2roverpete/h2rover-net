@@ -38,10 +38,6 @@ export default function App() {
     "https://dev.h2rover.net",
     "blahblahblah123"
   );
-
-  const {siteOutline} = useContext(SiteContext);
-  console.debug(`Outline: ${JSON.stringify(siteOutline)}`);
-
   return (
     <Site restApi={restApi} googleId={'G-L4CKYJ846Z'}>
       <Page>
