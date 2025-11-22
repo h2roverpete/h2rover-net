@@ -63,7 +63,7 @@ function LodgingFields({lodgingData, onChange}) {
           }}
           showMonthYearDropdown
           id="arrivaldate"
-          className="form-control"
+          className="form-control ms-2"
           style={{marginLeft: '10px'}}
           selectsStart={true}
           minDate={new Date() + ONE_DAY}
@@ -73,7 +73,7 @@ function LodgingFields({lodgingData, onChange}) {
           required={true}
         />
       </div>
-      <div className="form-group required">
+      <div className="form-group required mt-2">
         <label htmlFor="departuredate" className="form-label required mt-2">Departure Date</label>
         <DatePicker
           selected={lodgingData.DepartureDate}
@@ -87,7 +87,7 @@ function LodgingFields({lodgingData, onChange}) {
           }}
           showMonthYearDropdown
           id="departuredate"
-          className="form-control"
+          className="form-control ms-2"
           style={{marginLeft: '10px'}}
           selectsEnd={true}
           minDate={lodgingData.ArrivalDate + ONE_DAY}
