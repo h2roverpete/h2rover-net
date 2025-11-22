@@ -1,12 +1,13 @@
 import './App.css';
+import './GuestBook.css'
+
 import Head from './framework/ui/content/Head'
 import Copyright from './framework/ui/content/Copyright'
 import RestAPI from './framework/api/api';
-import Site, {SiteContext} from "./framework/ui/content/Site";
+import Site from "./framework/ui/content/Site";
 import Page from "./framework/ui/content/Page";
 import PageContent from "framework/ui/content/PageContent";
 import NavBar from "framework/ui/content/NavBar";
-import {useContext} from "react";
 import Breadcrumbs from "framework/ui/content/Breadcrumbs";
 import PageTitle from "framework/ui/content/PageTitle";
 import PageSections from "framework/ui/content/PageSections";

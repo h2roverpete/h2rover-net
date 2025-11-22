@@ -150,27 +150,6 @@ div.SectionText {
   line-height:120%;
 }
 
-/* Guest book submit button */
-input.btn-primary {
-  background-color: #4d94e3;
-  border-color: #4d94e3;
-  color: white;
-}
-
-/* Guest book submit hover */
-input.btn-primary:hover {
-  background-color: #53a0f6;
-  border-color: #53a0f6;
-  color: white;
-}
-
-/* Guest book submit pressed */
-input.btn.btn-primary:active {
-  background-color: #2a5c93;
-  border-color: #2a5c93;
-  color: white;
-}
-
 /* up to bootstrap md width */
 @media (max-width: 768px) {
   div.PageContent {

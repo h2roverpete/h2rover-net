@@ -1,0 +1,43 @@
+/* Guest book field labels */
+form {
+
+}
+
+label {
+  font-weight: bold;
+}
+
+/* Form input fields */
+li.country,
+input.form-control.phone,
+input.form-control,
+textarea.form-control,
+select.form-control {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  font-size: 14pt;
+  height: auto;
+}
+
+/* Guest book submit button */
+button.btn.btn-primary,
+input.btn.btn-primary {
+  background-color: #4d94e3;
+  border-color: #4d94e3;
+  color: white;
+}
+
+/* Guest book submit hover */
+button.btn.btn-primary:hover,
+input.btn.btn-primary:hover {
+  background-color: #53a0f6;
+  border-color: #53a0f6;
+  color: white;
+}
+
+/* Guest book submit pressed */
+button.btn.btn-primary:active,
+input.btn.btn-primary:active {
+  background-color: #2a5c93;
+  border-color: #2a5c93;
+  color: white;
+}
