@@ -11,6 +11,7 @@ import Breadcrumbs from "framework/ui/content/Breadcrumbs";
 import Logo from "framework/ui/content/Logo";
 
 import './GuestBook.css'
+import logo from "./assets/logo.png"
 
 /**
  * @typedef MyPageProps
@@ -29,7 +30,7 @@ export default function MyPage(props) {
   return (
     <Page pageId={props.pageId}>
       <Head/>
-      <Logo/>
+      <Logo src={logo}/>
       <NavBar expand={'sm'} theme={'dark'}/>
       <PageContent>
         <Breadcrumbs/>
