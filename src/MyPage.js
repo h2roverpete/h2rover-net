@@ -7,8 +7,8 @@ import GuestBook from "framework/ui/guestbook/GuestBook";
 import Copyright from "framework/ui/content/Copyright";
 import Page from "framework/ui/content/Page";
 import React from "react";
-import Logo from "./Logo";
 import Breadcrumbs from "framework/ui/content/Breadcrumbs";
+import Logo from "framework/ui/content/Logo";
 
 import './GuestBook.css'
 

@@ -6,16 +6,6 @@ import Site from "./framework/ui/content/Site";
 import MyPage from "./MyPage";
 
 /**
- * Display navigation bar.
- *
- * @param db{[RestAPI]}              Content Database.
- * @param pageId{Number}        Current navigation page.
- * @param setPageId{Function}   Callback for changing page ID.
- * @returns {JSX.Element}
- * @constructor
- */
-
-/**
  * Main component
  *
  * @returns {
@@ -26,14 +16,14 @@ import MyPage from "./MyPage";
 export default function App() {
 
   const restApi = new RestAPI(
-    241,
-    "https://prod.api.h2rover.net",
-    "blahblahblah123"
+    parseInt(process.env.REACT_APP_SITE_ID),
+    process.env.REACT_APP_BACKEND_HOST,
+    process.env.REACT_APP_API_KEY
   );
   return (
     <Site
       restApi={restApi}
-      googleId={'G-L4CKYJ846Z'}
+      googleId={process.env.REACT_APP_GOOGLE_ID}
       pageElement={MyPage}
     />
   );
