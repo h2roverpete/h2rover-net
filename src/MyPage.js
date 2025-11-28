@@ -28,7 +28,7 @@ import logo from "./assets/logo.png"
  */
 export default function MyPage(props) {
   return (
-    <Page pageId={props.pageId}>
+    <Page {...props}>
       <Head/>
       <Logo src={logo}/>
       <NavBar expand={'sm'} theme={'dark'}/>
