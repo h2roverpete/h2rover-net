@@ -10,7 +10,7 @@ import React from "react";
 import Breadcrumbs from "framework/ui/content/Breadcrumbs";
 import Logo from "framework/ui/content/Logo";
 
-import './GuestBook.css'
+import './css/GuestBook.css'
 import logo from "./assets/logo.png"
 
 /**
