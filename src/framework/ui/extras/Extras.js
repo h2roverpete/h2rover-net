@@ -1,5 +1,4 @@
 import GuestBook from "../guestbook/GuestBook";
-import {usePageContext} from "../content/Page";
 import Gallery from "../gallery/Gallery";
 import React, {useEffect} from 'react'
 import Instagram from "../instagram/Instagram";
@@ -16,7 +15,7 @@ export default function Extras() {
   // extras to show
   const {sectionExtras} = usePageSectionContext();
   useEffect(() => {
-    console.log(`Section extras changed: ${JSON.stringify(sectionExtras)}`);
+    console.debug(`Section extras changed: ${JSON.stringify(sectionExtras)}`);
   }, [sectionExtras]);
 
   return (<>
