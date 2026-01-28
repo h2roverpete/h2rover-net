@@ -12,6 +12,7 @@ import Logo from "framework/ui/content/Logo";
 
 import './css/GuestBook.css'
 import logo from "./assets/logo.png"
+import PageNavigation from "framework/ui/content/PageNavigation";
 
 /**
  * @typedef MyPageProps
@@ -36,8 +37,8 @@ export default function MyPage(props) {
         <Breadcrumbs/>
         <PageTitle/>
         <PageSections/>
-        <GuestBook guestBookId={229} pageId={8678}/>
       </PageContent>
+      <PageNavigation/>
       <Copyright startYear={'2010'}/>
     </Page>
   );

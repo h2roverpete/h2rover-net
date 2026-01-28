@@ -117,14 +117,14 @@ h2.SectionTitle {
   line-height: 180%;
 }
 
-.SectionText a,
-.SectionText a:active,
-.SectionText a:visited {
+.PageContent a,
+.PageContent a:active,
+.PageContent a:visited {
   color: #407cbf;
   text-decoration: none;
 }
 
-.SectionText a:hover {
+.PageContent a:hover {
   color: #407cbf;
   text-decoration: underline;
 }
@@ -148,6 +148,23 @@ div.SectionText {
   text-align: center;
   color: #b0d0f3;
   line-height:120%;
+}
+
+/* page nav */
+.PageNavigation {
+  width: 100%;
+  margin-top: 10px;
+  font-size: 14pt;
+}
+
+.PageNavigation a {
+  color: #b0d0f3;
+  text-decoration: none;
+  text-shadow: black 1px 1px;
+}
+
+.PageNavigation a:hover {
+  color: white;
 }
 
 /* up to bootstrap md width */

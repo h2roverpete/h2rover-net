@@ -1,9 +1,9 @@
 import './css/Site.css';
 
-import {BrowserRouter} from "react-router";
 import Site from "framework/ui/content/Site";
 import MyPage from "./MyPage";
 import React from "react";
+import FrameworkApp from "framework/FrameworkApp";
 
 /**
  * App wraps the Site component in a React Router
@@ -14,8 +14,8 @@ import React from "react";
  */
 export default function App() {
   return (
-    <BrowserRouter>
+    <FrameworkApp>
       <Site pageElement={MyPage}/>
-    </BrowserRouter>
+    </FrameworkApp>
   )
 }
