@@ -1,12 +1,10 @@
 import Image from 'react-bootstrap/Image';
-import {SiteContext} from "framework/ui/content/Site";
-import {useContext} from "react";
-import {PageContext} from "framework/ui/content/Page";
-
+import {useNavigate} from "react-router";
 
 /**
  * @typedef LogoProps
  * @property {string} src   Logo source file.
+ * @property {string} href  Link to
  */
 /**
  * Display a site logo.
@@ -16,17 +14,13 @@ import {PageContext} from "framework/ui/content/Page";
  * @constructor
  */
 export default function Logo(props) {
-  const {outlineData} = useContext(SiteContext);
-  const {setPageId} = useContext(PageContext);
-
+  const navigate = useNavigate();
   return (
     <Image
-      className='Logo'
-      src={props.src}
+      className={`Logo ${props.className}`}
       style={{cursor: 'pointer'}}
-      onClick={() => {
-        setPageId(outlineData?.[0].PageID)
-      }}
+      src={props.src}
+      onClick={() => navigate(props.href ? props.href : '/')}
     />
   )
 }
