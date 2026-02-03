@@ -66,10 +66,10 @@ a.dropdown-item.active {
 
 /* Navbar navigation links */
 .navbar .navbar-nav .nav-link {
-  font-size: 18pt;
+  font-size: 16pt;
   text-shadow: 1px 1px 1px #000;
   color: #bbddff;
-  margin: 0 10px;
+  margin: 0 5px;
   white-space: nowrap;
 }
 
@@ -92,7 +92,7 @@ div.PageContent {
   border-radius: 20px;
   box-shadow: 2px 2px 8px #00000044;
   padding: 30px;
-  font-size: 14pt;
+  font-size: 13pt;
 }
 
 /* Main title */
@@ -131,7 +131,7 @@ h2.SectionTitle {
 
 /* Uncontained list items need margin correction */
 li {
-  margin-left: 20px;
+  margin-left: -10px;
 }
 
 /* Text content */
@@ -181,19 +181,46 @@ div.SectionText {
     width: 100vw;
   }
   .navbar .navbar-nav .nav-link {
-    margin-left: 10px;
+    margin-left: 5px;
+    font-size: 14pt;
+    padding: 5px;
+  }
+  /* Main title */
+  h1.PageTitle {
+    font-size: 16pt;
+    margin-bottom: 5px;
+  }
+  div.PageContent,
+  .Copyright,
+  .PageNavigation {
+    font-size: 11pt;
+  }
+  div.SectionText {
+    line-height: 150%;
   }
 }
 
 
 /* bootstrap sm width */
 @media (min-width: 576px) {
-
+  div.PageContent,
+  .Copyright,
+  .PageNavigation {
+    font-size: 13pt;
+  }
 }
 
 /* bootstrap md width */
 @media (min-width: 768px) {
-
+  /* Navbar navigation links */
+  .navbar .navbar-nav .nav-link {
+    font-size: 18pt;
+  }
+  div.PageContent,
+  .Copyright,
+  .PageNavigation {
+    font-size: 14pt;
+  }
 }
 
 /* bootstrap lg width */
