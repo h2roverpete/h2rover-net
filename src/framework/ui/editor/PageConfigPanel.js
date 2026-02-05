@@ -1,9 +1,9 @@
-import {Button, Collapse} from "react-bootstrap";
-import {useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import {useNavigate} from "react-router";
-import {BsChevronCompactDown, BsChevronCompactUp} from "react-icons/bs";
 import PageConfig from "./PageConfig";
 import FormEditor from "./FormEditor";
+import {useTouchContext} from "../../util/TouchProvider";
+import EditorPanel from "./EditorPanel";
 
 /**
  * Edit page metadata fields.
@@ -12,9 +12,9 @@ import FormEditor from "./FormEditor";
  */
 export default function PageConfigPanel() {
 
-  const [expanded, setExpanded] = useState(false);
   const navigate = useNavigate();
   const buttonRef = useRef(null);
+  const {supportsHover} = useTouchContext();
 
   function collapsePanel() {
     buttonRef.current?.click();
@@ -29,51 +29,36 @@ export default function PageConfigPanel() {
     navigate('/');
   }
 
-  return (<div
-    className="PageEditor Editor"
-    style={{
-      display: 'flex',
-      flexDirection: 'column',
-      width: '100%',
-    }}>
-    <Button
-      ref={buttonRef}
-      onClick={() => setExpanded(!expanded)}
-      className={`EditorToggle ${expanded ? '' : 'collapsed'}`}
+  useEffect(() => {
+    if (buttonRef.current) {
+      buttonRef.current.hidden = supportsHover;
+    }
+  }, [supportsHover, buttonRef]);
+
+  return (
+    <div
+      className="PageEditor"
       style={{
-        border: 'none',
-        borderRadius: 0,
-        padding: '0 10px 5px 0',
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
         position: 'fixed',
-        top: '-5px',
-        left: 0,
-        zIndex: 1200,
-        width: '100%',
+        top: -5,
+        width: '100vw',
+        zIndex: '1198',
+      }}
+      onMouseEnter={() => {
+        if (supportsHover && buttonRef.current) buttonRef.current.hidden = false;
+      }}
+      onMouseLeave={() => {
+        if (supportsHover && buttonRef.current) buttonRef.current.hidden = true;
       }}
     >
-      {expanded ? (<BsChevronCompactUp size={'25'}/>) : ((<BsChevronCompactDown size={'25'}/>))}
-    </Button>
-    <Collapse
-      in={expanded}
-      dimension={'height'}
-      className={'Editor'}
-    >
-      <div style={{
-        backgroundColor: '#e0e0e0f0',
-        borderBottom: '1px solid #00000040',
-        position: 'fixed',
-        zIndex: 1199,
-        width: '100%',
-        padding: '10px 10px 10px 10px',
-
-      }}>
-        <FormEditor>
-          <PageConfig onPageUpdated={onPageUpdated} onPageDeleted={onPageDeleted}/>
-        </FormEditor>
-      </div>
-    </Collapse>
-  </div>);
+      <FormEditor>
+        <EditorPanel buttonRef={buttonRef} hideButtons={true}>
+          <PageConfig
+            onPageUpdated={onPageUpdated}
+            onPageDeleted={onPageDeleted}
+          />
+        </EditorPanel>
+      </FormEditor>
+    </div>
+  );
 }

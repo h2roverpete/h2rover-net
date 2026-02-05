@@ -1,12 +1,18 @@
 import {Button, Collapse} from "react-bootstrap";
-import {BsChevronCompactLeft, BsChevronCompactRight} from "react-icons/bs";
+import {BsChevronCompactLeft, BsChevronCompactRight, BsXLg} from "react-icons/bs";
 import SiteOutline from "./SiteOutline";
 import FormEditor from "./FormEditor";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import SiteConfig from "./SiteConfig";
+import {useTouchContext} from "../../util/TouchProvider";
+import EditorPanel, {Direction} from "./EditorPanel";
 
 export default function SiteConfigPanel() {
+
   const [expanded, setExpanded] = useState(false);
+  const buttonRef = useRef(null);
+  const {supportsHover} = useTouchContext();
+
   return (<div
     className={'Editor SiteEditor'}
     style={{
@@ -14,53 +20,93 @@ export default function SiteConfigPanel() {
       flexDirection: 'row',
       height: '100%',
     }}
+    onMouseEnter={() => {
+      if (supportsHover && buttonRef.current) buttonRef.current.hidden = false;
+    }}
+    onMouseLeave={() => {
+      if (supportsHover && buttonRef.current) buttonRef.current.hidden = true;
+    }}
   >
-    <Button
-      variant=""
-      onClick={() => setExpanded(!expanded)}
-      className={`EditorToggle ${expanded ? '' : 'collapsed'}`}
+    <div
+      className={`Editor EditorPanel Header ${expanded ? 'expanded' : 'collapsed'}`}
       style={{
-        padding: '30px 5px 0 0',
-        display: 'fixed',
-        flexDirection: 'column',
         position: 'fixed',
         top: 0,
         left: '-5px',
         zIndex: 1198,
-        height: '100%',
+        height: '100vh',
+        width: '25px',
       }}
     >
-      {expanded ? (<BsChevronCompactLeft size={'25'}/>) : ((<BsChevronCompactRight size={'25'}/>))}
-    </Button>
+      <Button
+        variant=""
+        onClick={() => setExpanded(!expanded)}
+        className={`Editor EditorToggle vertical ${expanded ? 'expanded' : 'collapsed'}`}
+        style={{
+          padding: '30px 5px 0 0',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        hidden={supportsHover}
+        ref={buttonRef}
+      >
+        {expanded ? (<BsChevronCompactLeft size={'25'}/>) : ((<BsChevronCompactRight size={'25'}/>))}
+      </Button>
+    </div>
     <Collapse
       in={expanded}
       dimension={'width'}
-      className={'Editor'}
     >
-      <div style={{
-        backgroundColor: '#e0e0e0f0',
-        borderRight: '1px solid #00000040',
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: 1197,
-        padding: '10px 10px 10px 10px',
-        height: '100vh'
-      }}>
+      <div
+        className={`Editor EditorPanel Body ${expanded ? 'expanded' : 'collapsed'}`}
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 1197,
+          height: '100vh'
+        }}
+      >
         <div style={{
           width: '200px',
           display: 'flex',
           flexDirection: 'column',
           height: '100%',
+          position: 'relative',
         }}>
-          <div style={{
+          <BsXLg
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              fontSize: '14pt',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              setExpanded(false)
+            }}
+          />
+          <div
+            className={`Editor OutlinePanel`}
+            style={{
             flexGrow: 1,
+            flexShrink: 1,
+            overflow: 'hidden',
           }}>
-            <SiteOutline style={{maxHeight: '60vh'}} className={'overflow-auto'}/>
+            <SiteOutline/>
           </div>
-          <div style={{}}>
+          <div
+            style={{
+            flexGrow: 0,
+            flexShrink: 0,
+          }}>
             <FormEditor>
-              <SiteConfig/>
+              <EditorPanel hideButtons={true} hideCloseBox={true} direction={Direction.UP}>
+                <SiteConfig/>
+              </EditorPanel>
             </FormEditor>
           </div>
         </div>
