@@ -1,21 +1,34 @@
-import {Accordion, AccordionButton, Button, Col, Row} from "react-bootstrap";
+import {Button, Col, Collapse, Row} from "react-bootstrap";
 import {useState} from "react";
 import {useEdit} from "./EditProvider";
 import {useFormEditor} from "./FormEditor";
+import {BsChevronCompactDown, BsChevronCompactUp, BsXLg} from "react-icons/bs";
+
+export const Direction = {
+  /** slide up */
+  UP: 'up',
+  /** slide down */
+  DOWN: 'down',
+}
+
+/**
+ * @typedef PanelAPI
+ * @property {boolean} isExpanded
+ */
 
 /**
  * Display a collapsable editing panel
  *
- * @param onUpdate {function()}    Callback when Update button is clicked.
- * @param onDelete {function()}    Callback when Delete button is clicked.
- * @param isDataValid {function()}          Callback to check if data is valid.
- * @param [extraButtons] {JSX.Element}    Extra buttons for the bottom of the panel.
- * @param children {[JSX.Element]}        Child elements, i.e. Rows and Cols and form controls.
- * @param [position] {String}             Position attribute for the panel, i.e. 'fixed' or 'relative'
- * @param [buttonStyle] {Object}          Additional styles for the collapse/expand button.
- * @param [buttonRef] {RefObject}         Reference to the collapse/expand button.
- * @param [panelStyle] {Object}           Additional styles for the panel container.
- * @param [bodyStyle] {Object}            Additional styles for the panel body.
+ * @param onUpdate {function()}         Callback when Update button is clicked.
+ * @param onDelete {function()}         Callback when Delete button is clicked.
+ * @param isDataValid {function()}      Callback to check if data is valid.
+ * @param [extraButtons] {JSX.Element}  Extra buttons for the bottom of the panel.
+ * @param [hideButtons] {boolean}       Hide the built-in panel buttons for Update and Revert
+ * @param [hideCloseBox] {boolean}      Hide the close box
+ * @param children {[JSX.Element]}      Child elements, i.e. Rows and Cols and form controls.
+ * @param [buttonRef] {Ref<HTMLButtonElement>}       Reference to the collapse/expand button.
+ * @param [ref] {Ref<PanelAPI>}         Reference to functions.
+ * @param [direction] {String}          Direction that
  * @returns {JSX.Element}
  * @constructor
  */
@@ -25,59 +38,65 @@ export default function EditorPanel(
     onDelete,
     isDataValid,
     children,
-    position,
-    buttonStyle,
     buttonRef,
-    panelStyle,
-    bodyStyle,
-    extraButtons
+    extraButtons,
+    ref,
+    hideButtons = false,
+    hideCloseBox = false,
+    direction = Direction.DOWN,
   }
 ) {
   const {FormData} = useFormEditor();
-
-  const [activeKey, setActiveKey] = useState('');
-
+  const [expanded, setExpanded] = useState(false);
   const {canEdit} = useEdit();
+
   if (!canEdit) {
     return <></>
   }
-  return (
-    <Accordion
-      activeKey={activeKey}
-      style={{width: '100%'}}
+
+  if (ref) {
+    ref.current = {
+      isExpanded: expanded,
+    }
+  }
+
+  return (<div
+    className={`Editor EditorPanel ${expanded ? 'expanded' : 'collapsed'}`}
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      width: '100%',
+      position: 'relative',
+      minHeight: '20px',
+    }}>
+
+    <Collapse
+      in={expanded}
+      dimension={'height'}
       className={'Editor'}
     >
-      <Accordion.Item
+      <div
         style={{
-          width: "100%",
-          position: position ? position : 'relative',
-          background: 'transparent',
-          border: 'none',
-          ...panelStyle,
+          position: 'relative',
         }}
-        eventKey={'config'}
+        className={`Editor EditorPanel Body ${expanded ? 'expanded' : 'collapsed'}`}
       >
-        <AccordionButton
-          style={{
-            padding: '0 8px 0 0',
-            top: '0',
-            left: '0',
-            background: 'transparent',
-            boxShadow: 'none',
-            ...buttonStyle,
-          }}
-          ref={buttonRef}
-          className="EditorToggle"
-          onClick={() => setActiveKey(activeKey === 'config' ? '' : 'config')}
-        />
-        <Accordion.Body
-          style={{
-            background: '#e0e0e0f0',
-            marginBottom: '20px',
-            ...bodyStyle,
-          }}
-        >
-          {children}
+        {!hideCloseBox && (
+          <BsXLg
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              fontSize: '14pt',
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              setExpanded(false)
+            }}
+          />
+        )}
+        {children}
+        {!hideButtons && (
           <Row className={'mt-4'}>
             <Col xs={'auto'} className={'pe-0'}>
               {onUpdate && isDataValid && (
@@ -85,8 +104,8 @@ export default function EditorPanel(
                   className="me-2"
                   size={'sm'}
                   variant="primary"
-                  onClick={()=>{
-                    setActiveKey('');
+                  onClick={() => {
+                    setExpanded(false);
                     onUpdate?.();
                   }}
                   disabled={!isDataValid() || !FormData?.isDataChanged()}
@@ -116,8 +135,50 @@ export default function EditorPanel(
               )}
             </Col>
           </Row>
-        </Accordion.Body>
-      </Accordion.Item>
-    </Accordion>
-  )
+        )}
+      </div>
+    </Collapse>
+    <div
+      className={`Editor EditorPanel Header ${expanded ? 'expanded' : 'collapsed'}`}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        width: '100%',
+      }}>
+      <Button
+        variant={''}
+        ref={buttonRef}
+        onClick={() => setExpanded(!expanded)}
+        className={`EditorToggle horizontal ${expanded ? '' : 'collapsed'}`}
+        style={{
+          marginLeft: 0,
+          borderRadius: 0,
+          padding: 0,
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        {expanded ? (<>
+          {direction === Direction.DOWN ? (
+            <BsChevronCompactUp size={'25'}/>
+          ) : (
+            <BsChevronCompactDown size={'25'}/>
+          )}
+        </>) : (<>
+          {direction === Direction.DOWN ? (
+            <BsChevronCompactDown size={'25'}/>
+          ) : (
+            <BsChevronCompactUp size={'25'}/>
+          )
+          }
+        </>)}
+      </Button>
+    </div>
+  </div>);
 }
