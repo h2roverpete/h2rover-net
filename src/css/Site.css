@@ -16,17 +16,21 @@
   align-items: center;
   flex: 1;
   max-width: 768px; /** bootstrap lg boundary */
+  position: relative;
 }
 
 .Logo {
   margin: 20px 0 0 0;
+  flex-grow: 0;
 }
+
 /* Navigation bar outer container */
 .NavBar.navbar {
   padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  flex-grow: 0;
 }
 
 /* Navigation bar inner elements, allows for custom alignment/layout */
@@ -45,8 +49,8 @@
 /* Navbar dropdown button */
 .navbar .navbar-toggler {
   border-color: white;
-  margin-bottom:10px;
-  margin-left:10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
 }
 
 /* Navbar dropdown submenus */
@@ -88,7 +92,7 @@ a.NavItem.nav-link:hover {
 /* Page content container, use flex:1 to fill page height */
 div.PageContent {
   background-color: white;
-  flex: 1;
+  flex-grow: 1;
   border-radius: 20px;
   box-shadow: 2px 2px 8px #00000044;
   padding: 30px;
@@ -110,7 +114,7 @@ h2.SectionTitle {
 }
 
 .PageSection {
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
 .SectionText {
@@ -147,7 +151,8 @@ div.SectionText {
   justify-content: end;
   text-align: center;
   color: #b0d0f3;
-  line-height:120%;
+  line-height: 120%;
+  flex-grow: 0;
 }
 
 /* page nav */
@@ -155,6 +160,7 @@ div.SectionText {
   width: 100%;
   margin-top: 10px;
   font-size: 14pt;
+  flex-grow: 0;
 }
 
 .PageNavigation a {
@@ -177,24 +183,40 @@ div.SectionText {
 
 /* bootstrap xs width */
 @media (max-width: 575px) {
+
+  div.PageContent {
+    padding: 15px;
+  }
+
   .NavBarContents.container-fluid {
     width: 100vw;
   }
+
   .navbar .navbar-nav .nav-link {
     margin-left: 5px;
     font-size: 14pt;
     padding: 5px;
   }
+
   /* Main title */
   h1.PageTitle {
     font-size: 16pt;
     margin-bottom: 5px;
   }
-  div.PageContent,
-  .Copyright,
-  .PageNavigation {
+
+  div.PageContent {
     font-size: 11pt;
   }
+
+  .PageNavigation {
+    font-size: 12pt;
+  }
+
+  .Copyright {
+    font-size: 10pt;
+    margin: 5px 0 15px 0;
+  }
+
   div.SectionText {
     line-height: 150%;
   }
@@ -204,9 +226,12 @@ div.SectionText {
 /* bootstrap sm width */
 @media (min-width: 576px) {
   div.PageContent,
-  .Copyright,
   .PageNavigation {
     font-size: 13pt;
+  }
+  .Copyright {
+    font-size: 11pt;
+    margin: 5px 0 20px 0;
   }
 }
 
@@ -216,11 +241,12 @@ div.SectionText {
   .navbar .navbar-nav .nav-link {
     font-size: 18pt;
   }
+
   div.PageContent,
-  .Copyright,
   .PageNavigation {
     font-size: 14pt;
   }
+
 }
 
 /* bootstrap lg width */
