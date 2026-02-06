@@ -3,7 +3,6 @@ import NavBar from "framework/ui/content/NavBar";
 import PageContent from "framework/ui/content/PageContent";
 import PageTitle from "framework/ui/content/PageTitle";
 import PageSections from "framework/ui/content/PageSections";
-import GuestBook from "framework/ui/guestbook/GuestBook";
 import Copyright from "framework/ui/content/Copyright";
 import Page from "framework/ui/content/Page";
 import React from "react";

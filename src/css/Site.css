@@ -68,6 +68,10 @@ a.dropdown-item.active {
 
 }
 
+.dropdown.AddPageButton {
+  margin: 10px;
+}
+
 /* Navbar navigation links */
 .navbar .navbar-nav .nav-link {
   font-size: 16pt;
@@ -85,8 +89,13 @@ a.dropdown-item.active {
 }
 
 /* Navbar link hover */
-a.NavItem.nav-link:hover {
+a.NavLink.nav-link:hover {
   color: white;
+}
+
+div.AddPageButton {
+  position: absolute;
+  right: -30px;
 }
 
 /* Page content container, use flex:1 to fill page height */
@@ -103,7 +112,7 @@ div.PageContent {
 h1.PageTitle {
   color: #407cbf;
   font-size: 20pt;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   text-align: center;
 }
 
@@ -198,10 +207,16 @@ div.SectionText {
     padding: 5px;
   }
 
+  div.AddPageButton {
+    position: absolute;
+    left: 35%;
+    bottom: 0;
+  }
+
   /* Main title */
   h1.PageTitle {
     font-size: 16pt;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   div.PageContent {
