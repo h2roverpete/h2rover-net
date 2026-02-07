@@ -31,7 +31,7 @@ export default function MyPage(props) {
     <Page {...props}>
       <Head/>
       <Logo src={logo}/>
-      <NavBar expand={'sm'} theme={'dark'}/>
+      <NavBar expand={'sm'}/>
       <PageContent>
         <Breadcrumbs/>
         <PageTitle/>

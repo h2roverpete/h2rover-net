@@ -69,10 +69,6 @@ a.dropdown-item.active {
 
 }
 
-.dropdown.AddPageButton {
-  margin: 10px;
-}
-
 /* Navbar navigation links */
 .navbar .navbar-nav .nav-link {
   font-size: 16pt;
@@ -92,11 +88,6 @@ a.dropdown-item.active {
 /* Navbar link hover */
 a.NavLink.nav-link:hover {
   color: white;
-}
-
-div.AddPageButton {
-  position: absolute;
-  right: -30px;
 }
 
 /* Page content container, use flex:1 to fill page height */
@@ -206,12 +197,6 @@ div.SectionText {
     margin-left: 5px;
     font-size: 14pt;
     padding: 5px;
-  }
-
-  div.AddPageButton {
-    position: absolute;
-    left: 35%;
-    bottom: 0;
   }
 
   /* Main title */
