@@ -6,6 +6,11 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/** Keep modal dialogs on top */
+.modal {
+  z-index: 2000;
+}
+
 /* Editor form elements */
 .Editor .col-form-label-sm,
 .Editor div.form-control-sm,
@@ -77,6 +82,20 @@ button.EditButton {
   width: 25px;
   height: 25px;
   padding: 0;
+  font-size: 10pt;
+}
+
+.EditGalleryPhoto.Editor.dropdown {
+  position: absolute;
+  top: -5px;
+  right: 2px;
+}
+
+/* Text alignment buttons for editing */
+div.AlignButtons {
+  position: absolute;
+  top: -20px;
+  left: 40%;
 }
 
 /* Editor drop down menus */
@@ -109,6 +128,9 @@ button.AddPageButton {
   right: -30px;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
 }
 
 /* Dropdown position in non-expanded state, sm breakpoint */
@@ -127,14 +149,18 @@ button.AddPageButton {
 
 
 /* Position dropdown menu for editing section contents */
-.EditSectionMenu {
+div.EditSectionMenu {
   position: absolute;
-  top: 3px;
-  right: 3px;
+  top: -2px;
+  right: 2px;
+}
+
+div.EditSectionButton {
+  z-index: 100;
 }
 
 /* Placeholder for empty page elements */
-.Editor.EmptyElement {
+div.Editor.EmptyElement {
   width: 100%;
   height: 100%;
   display: flex;
@@ -160,27 +186,36 @@ button.AddPageButton {
   background-color: #ffffff88;
   text-align: center;
   font-size: 14pt;
+  overflow: hidden;
+}
+
+div.SiteEditor {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  min-height: 100dvh;
+  position: relative;
 }
 
 /* no margin for site editor */
-.SiteEditor .EditorPanel {
+.SiteConfigPanel .EditorPanel {
   margin: 0;
 }
 
 /* no margin for page editor */
-.PageEditor .EditorPanel {
+.PageConfigPanel .EditorPanel {
   margin: 0;
 }
 
 /* Body of site editor */
-.SiteEditor .EditorPanel.Body {
+.SiteConfigPanel .EditorPanel.Body {
   padding: 0;
   border: none;
   border-right: 1px solid #00000040;
 }
 
 /* Body of page editor */
-.PageEditor .EditorPanel.Body {
+.PageConfigPanel .EditorPanel.Body {
   padding: 20px 10px 10px 15px;
   border: none;
   border-bottom: 1px solid #00000040;
@@ -192,20 +227,20 @@ button.AddPageButton {
 }
 
 /* Site properties slide up panel within site editor */
-.SiteEditor .EditorPanel.Body .EditorPanel.Body {
+.SiteConfigPanel .EditorPanel.Body .EditorPanel.Body {
   padding: 20px 10px 10px 15px;
   border: none;
   border-top: 1px solid #00000040;
 }
 
 /* Page editor toggle arrow collapsed */
-.PageEditor .EditorToggle.collapsed {
+.PageConfigPanel .EditorToggle.collapsed {
   color: white;
   filter: drop-shadow(0px 1px black);
 }
 
 /* Site editor toggle arrow collapsed */
-.SiteEditor .EditorToggle.collapsed.vertical {
+.SiteConfigPanel .EditorToggle.collapsed.vertical {
   color: white;
   filter: drop-shadow(1px 0px black);
 }
