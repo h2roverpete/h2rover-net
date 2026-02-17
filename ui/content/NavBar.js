@@ -1,18 +1,14 @@
-import {lazy, Suspense, useRef, useState} from "react";
+import {useRef} from "react";
 import {useSiteContext} from "./Site";
-import {usePageContext} from "./Page";
 import Navbar from 'react-bootstrap/Navbar';
-import {Button, Nav, NavDropdown} from "react-bootstrap";
+import {Nav, NavDropdown} from "react-bootstrap";
 import {useNavigate} from "react-router";
 import {useAuth} from "../../auth/AuthProvider";
 import {useEdit} from "../editor/EditProvider";
-import {BsPlus} from "react-icons/bs";
 import {useRestApi} from "../../api/RestApi";
 import React from 'react';
-import FormEditor from "../editor/FormEditor";
 import {useTouchContext} from "../../util/TouchProvider";
 import AddPageMenu from "../editor/AddPageMenu";
-
 
 /**
  * @typedef NavBarProps
@@ -34,37 +30,31 @@ import AddPageMenu from "../editor/AddPageMenu";
  */
 export default function NavBar(props) {
 
-  const {siteData, getChildren, Outline} = useSiteContext();
-  const {pageData, breadcrumbs, addPageSection} = usePageContext();
+  const {siteData, getChildren, Outline, currentPage, breadcrumbs} = useSiteContext();
   const navigate = useNavigate();
-  const togglerRef = useRef(null);
+  const toggleRef = useRef(null);
   const {token} = useAuth();
   const {canEdit} = useEdit();
-  const {Pages, PageSections} = useRestApi();
+  const {Pages} = useRestApi();
   const editButtonRef = useRef(null);
   const {supportsHover} = useTouchContext();
 
   function navigateTo(to) {
-    if ((togglerRef.current.style.visible || togglerRef.current.style.display !== 'none') && !togglerRef.current.classList.contains("collapsed")) {
+    if ((toggleRef.current.style.visible || toggleRef.current.style.display !== 'none') && !toggleRef.current.classList.contains("collapsed")) {
       // toggle is active, collapse menu on navigation
-      togglerRef.current.click();
+      toggleRef.current.click();
     }
     // react-router navigation
     navigate(to);
   }
 
   function isInCurrentPath(pageId) {
-    if (!pageData || !breadcrumbs) {
-      return false
-    } else if (pageId === pageData.PageID) {
+    if (currentPage && currentPage.PageID === pageId) {
+      // is current page
       return true;
     } else {
-      for (const page of breadcrumbs) {
-        if (page.PageID === pageId) {
-          return true;
-        }
-      }
-      return false;
+      // is in breadcrumb path
+      return breadcrumbs?.find((item) => item.PageID === pageId);
     }
   }
 
@@ -115,7 +105,7 @@ export default function NavBar(props) {
                 onDragOver={(e) => dragOverHandler(e, item, 'vertical')}
                 onDragLeave={(e) => dragLeaveHandler(e)}
                 onDrop={(e) => dropHandler(e, item, 'vertical')}
-                className={`NavbarDropdownItem text-nowrap${pageData?.PageID === item.PageID ? ' active' : ''}`}
+                className={`NavbarDropdownItem text-nowrap${currentPage?.PageID === item.PageID ? ' active' : ''}`}
                 key={item.PageID}
                 onClick={() => navigateTo(item.PageRoute)}
                 data-testid={`NavItem-${item.PageID}`}
@@ -155,7 +145,7 @@ export default function NavBar(props) {
   }
 
   function dragOverHandler(e, dropData, direction) {
-    if (togglerRef.current?.checkVisibility()) {
+    if (toggleRef.current?.checkVisibility()) {
       // navbar is collapsed, all items are vertical
       direction = 'vertical';
     }
@@ -198,7 +188,7 @@ export default function NavBar(props) {
    */
   function dropHandler(e, dropData, direction) {
     if (canEdit) {
-      if (togglerRef.current?.checkVisibility()) {
+      if (toggleRef.current?.checkVisibility()) {
         // navbar is collapsed, all items are vertical
         direction = 'vertical';
       }
@@ -280,7 +270,6 @@ export default function NavBar(props) {
                 src={props.icon}
                 alt={props.brand?.length ? props.brand : siteData?.SiteName}
                 height={45}
-                style={{marginRight: '10px'}}
                 onClick={() => {
                   navigateTo('/')
                 }}
@@ -305,7 +294,7 @@ export default function NavBar(props) {
           aria-controls="basic-navbar-nav"
           id="NavbarToggle"
           className="NavbarToggle"
-          ref={togglerRef}
+          ref={toggleRef}
         />
         <Navbar.Collapse
           className="NavbarCollapse"

@@ -8,6 +8,14 @@ import {useRestApi} from "../../api/RestApi";
 
 const NewPageModal = lazy(() => import("../editor/NewPageModal"));
 
+/**
+ * Dropdown menu for adding a new page or page section.
+ *
+ * @param {RefObject<HTMLDivElement>} [editButtonRef]  Receive a reference to the dropdown button div.
+ *
+ * @returns {Element}
+ * @constructor
+ */
 export default function AddPageMenu({editButtonRef}) {
 
   // imports
@@ -35,21 +43,13 @@ export default function AddPageMenu({editButtonRef}) {
 
   return (<div
     className="AddPageMenu Editor dropdown"
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      zIndex: 100,
-    }}
     ref={editButtonRef}
     hidden={supportsHover}
   >
     <Button
-      style={{
-        margin: '0 0 0 5px', padding: '2px 5px', fontSize: '10pt'
-      }}
-      className={`border btn-light`}
+      className={`AddPageButton EditButton btn-light`}
+      variant="secondary"
       type="button"
-      variant={'secondary'}
       size={'sm'}
       aria-expanded="false"
       data-bs-toggle="dropdown"
@@ -57,7 +57,7 @@ export default function AddPageMenu({editButtonRef}) {
       <BsPlus/>
     </Button>
     <div
-      className="dropdown-menu dropdown-menu-end Editor border-secondary border-opacity-25"
+      className="dropdown-menu dropdown-menu-end Editor"
     >
         <span
           className="dropdown-item"
