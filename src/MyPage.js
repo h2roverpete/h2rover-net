@@ -4,7 +4,6 @@ import PageContent from "framework/ui/content/PageContent";
 import PageTitle from "framework/ui/content/PageTitle";
 import PageSections from "framework/ui/content/PageSections";
 import Copyright from "framework/ui/content/Copyright";
-import Page from "framework/ui/content/Page";
 import React from "react";
 import Breadcrumbs from "framework/ui/content/Breadcrumbs";
 import Logo from "framework/ui/content/Logo";
@@ -12,6 +11,7 @@ import Logo from "framework/ui/content/Logo";
 import './css/GuestBook.css'
 import logo from "./assets/logo.png"
 import PageNavigation from "framework/ui/content/PageNavigation";
+import PageSwiper from "framework/ui/content/PageSwiper";
 
 /**
  * @typedef MyPageProps
@@ -27,18 +27,21 @@ import PageNavigation from "framework/ui/content/PageNavigation";
  * @constructor
  */
 export default function MyPage(props) {
-  return (
-    <Page {...props}>
-      <Head/>
-      <Logo src={logo}/>
-      <NavBar expand={'sm'}/>
-      <PageContent>
-        <Breadcrumbs/>
-        <PageTitle/>
-        <PageSections/>
-      </PageContent>
-      <PageNavigation/>
-      <Copyright startYear={'2010'}/>
-    </Page>
-  );
+  return (<>
+    <Head/>
+    <Logo src={logo}/>
+    <NavBar expand={'sm'}/>
+    <div className={`PageArea`}>
+      <PageSwiper {...props} >
+        <PageContent>
+          <Breadcrumbs/>
+          <PageTitle/>
+          <PageSections/>
+        </PageContent>
+      </PageSwiper>
+    </div>
+    <PageNavigation/>
+    <Copyright startYear={'2010'}/>
+  </>)
+    ;
 }

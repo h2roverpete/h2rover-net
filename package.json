@@ -1,6 +1,6 @@
 {
   "name": "www.h2rover.net",
-  "version": "1.3.7",
+  "version": "1.3.14",
   "private": true,
   "workspaces": [
     "src/framework"
@@ -17,8 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "gulp buildSitemap && react-scripts build",
+    "start": "gulp buildIndex && react-scripts start",
+    "build": "gulp buildSitemap && gulp buildIndex && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "aws s3 sync ./build s3://www.h2rover.net",
@@ -47,7 +47,7 @@
   },
   "devDependencies": {
     "colors": "^1.4.0",
-    "dotenv": "^17.2.3",
+    "dotenv": "^17.3.1",
     "gulp": "^5.0.1",
     "minimist": "^1.2.8"
   }

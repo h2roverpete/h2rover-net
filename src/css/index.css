@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   align-items: center;
   flex:1;
-  background: linear-gradient( to bottom, #407cbf, #326298);
+  background: linear-gradient( to bottom, #407cbf 30%, #326298);
 }
 
 #root {
