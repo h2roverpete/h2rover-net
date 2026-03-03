@@ -177,7 +177,7 @@ div.SectionText {
 /* page nav */
 .PageNavigation {
   width: 100%;
-  padding: 10px 10px 0 10px;
+  padding: 10px 10px 10px 10px;
   font-size: 14pt;
   flex-grow: 0;
   max-width: 768px;
@@ -190,6 +190,49 @@ div.SectionText {
 }
 
 .PageNavigation a:hover {
+  color: white;
+}
+
+/* Guest book field labels */
+div.GuestBook {
+  padding: 0;
+}
+
+.GuestBook label {
+  color: #407cbf;
+}
+
+/* Form input fields */
+.GuestBook li.country,
+.GuestBook input.form-control.phone,
+.GuestBook input.form-control,
+.GuestBook textarea.form-control,
+.GuestBook select.form-control {
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+  height: auto;
+}
+
+/* Guest book submit button */
+.GuestBook button.btn.btn-primary,
+.GuestBook input.btn.btn-primary {
+  background-color: #4d94e3;
+  border-color: #4d94e3;
+  color: white;
+}
+
+/* Guest book submit hover */
+.GuestBook button.btn.btn-primary:hover,
+.GuestBook input.btn.btn-primary:hover {
+  background-color: #53a0f6;
+  border-color: #53a0f6;
+  color: white;
+}
+
+/* Guest book submit pressed */
+.GuestBook button.btn.btn-primary:active,
+.GuestBook input.btn.btn-primary:active {
+  background-color: #2a5c93;
+  border-color: #2a5c93;
   color: white;
 }
 
@@ -208,7 +251,7 @@ div.SectionText {
   }
 
   .NavBar.navbar {
-    position: fixed;
+    position: absolute;
     top: 22vw;
     z-index: 1100; /* Ensure it stays above other content */
     background-color: #407cbf;
@@ -221,11 +264,11 @@ div.SectionText {
   }
 
   div.swiper-slide {
-    padding-top:70px;
+    padding-top:60px;
   }
 
   div.Page {
-    padding: 10px;
+    padding: 15px;
   }
 
   .NavBarContents.container-fluid {
@@ -268,10 +311,6 @@ div.SectionText {
   div.PageContent,
   .PageNavigation {
     font-size: 13pt;
-  }
-  .Copyright {
-    font-size: 11pt;
-    margin: 5px 0 20px 0;
   }
   div.Page {
     padding: 20px;
