@@ -58,8 +58,16 @@ export default function Site(props) {
   let cfmPageId = parseInt(params.get('pageid'));
 
   useEffect(() => {
+    if (siteData?.SiteTheme)
+    document.body.setAttribute('data-bs-theme', siteData.SiteTheme);
+  }, [siteData]);
+
+  useEffect(() => {
     // get current page and breadcrumbs from new pathname
-    if (outlineData) {
+    if (location.pathname === '/login') {
+      setCurrentPage(null);
+      setBreadcrumbs(null);
+    } else if (outlineData) {
       console.debug(`Update current page.`);
       if (location.pathname === '/') {
         setCurrentPage(outlineData[0]);
@@ -164,7 +172,7 @@ export default function Site(props) {
         setSiteData(data);
       }).catch(err => console.error(`Error loading site.`, err));
     }
-  }, [Sites]);
+  }, [Sites, siteData]);
 
   useEffect(() => {
     if (!outlineData) {
@@ -174,7 +182,7 @@ export default function Site(props) {
         setOutlineData(buildOutline(data));
       }).catch(err => console.error(`Error loading outline.`, err));
     }
-  }, [Sites]);
+  }, [Sites, outlineData]);
 
   let redirect;
   if (props.redirects && window.location.pathname === '/') {
