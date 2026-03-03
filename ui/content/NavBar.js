@@ -2,7 +2,7 @@ import {useRef} from "react";
 import {useSiteContext} from "./Site";
 import Navbar from 'react-bootstrap/Navbar';
 import {Nav, NavDropdown} from "react-bootstrap";
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {useAuth} from "../../auth/AuthProvider";
 import {useEdit} from "../editor/EditProvider";
 import {useRestApi} from "../../api/RestApi";
@@ -32,6 +32,7 @@ export default function NavBar(props) {
 
   const {siteData, getChildren, Outline, currentPage, breadcrumbs} = useSiteContext();
   const navigate = useNavigate();
+  const location = useLocation();
   const toggleRef = useRef(null);
   const {token} = useAuth();
   const {canEdit} = useEdit();
@@ -243,7 +244,6 @@ export default function NavBar(props) {
     <Navbar
       expand={props.expand ? props.expand : 'sm'}
       className={`NavBar ${!props.expand ? 'navbar-expand' : ''}`}
-      data-bs-theme={props.theme ? props.theme : "light"}
       fixed={props.fixed ? props.fixed : undefined}
       data-testid="NavBar"
       onMouseOver={() => {
@@ -264,18 +264,29 @@ export default function NavBar(props) {
             className={`NavBarBrand ${props.brandClassName}`}
             data-testid="NavBarBrand"
           >
-            <>{props.icon && (
-              <img
-                className="NavBarBrandIcon"
-                src={props.icon}
-                alt={props.brand?.length ? props.brand : siteData?.SiteName}
-                height={45}
-                onClick={() => {
-                  navigateTo('/')
-                }}
-                data-testid="NavBarBrandIcon"
-              />
-            )}</>
+            <>{props.icon && (<>
+              {
+                typeof props.icon === 'string' ? (
+                  <img
+                    className="NavBarBrandIcon"
+                    src={props.icon}
+                    alt={props.brand?.length ? props.brand : siteData?.SiteName}
+                    height={45}
+                    onClick={() => {
+                      navigateTo('/')
+                    }}
+                    data-testid="NavBarBrandIcon"
+                  />
+                ) : (<div
+                  className={`NavBarBrandIcon`}
+                  onClick={() => {
+                    navigateTo('/')
+                  }}
+                >
+                  {props.icon}
+                </div>)
+              }
+            </>)}</>
             <>{props.brand?.length > 0 && (
               <span
                 className={'NavBarBrandText text-nowrap'}
@@ -340,7 +351,7 @@ export default function NavBar(props) {
               ) : (
                 <Nav.Link
                   onClick={() => navigateTo('/login')}
-                  className={`NavItem text-nowrap`}
+                  className={`NavItem text-nowrap${location.pathname === '/login' ? ' active' : ''}`}
                   key={`Login`}
                   data-testid={`NavItem-Login`}
                 >
