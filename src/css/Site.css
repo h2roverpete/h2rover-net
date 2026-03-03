@@ -22,6 +22,7 @@
   flex-direction: column;
   justify-content: center;
   flex-grow: 0;
+  background: #407cbf !important;
 }
 
 /* Navigation bar inner elements, allows for custom alignment/layout */
@@ -174,23 +175,36 @@ div.SectionText {
   flex-grow: 0;
 }
 
-/* page nav */
+/* Next / previous navigation panel */
 .PageNavigation {
+  max-width: 768px;
   width: 100%;
   padding: 10px 10px 10px 10px;
   font-size: 14pt;
   flex-grow: 0;
-  max-width: 768px;
 }
 
-.PageNavigation a {
+/* Next / previous page links */
+.PageNavigation .nav-link {
   color: #b0d0f3;
+  padding: 4px 8px;
   text-decoration: none;
   text-shadow: black 1px 1px;
 }
 
-.PageNavigation a:hover {
-  color: white;
+/* Next / previous page hover */
+.PageNavigation .nav-link:hover {
+  color: var(--bs-light);
+}
+
+/* nav arrows for previous page */
+.PageNavigation div.nav.nav-item.nav-link.previous::before {
+  content: "« ";
+}
+
+/* nav arrows for next page */
+.PageNavigation div.nav.nav-item.nav-link.next::after {
+  content: " »";
 }
 
 /* Guest book field labels */
@@ -277,8 +291,8 @@ div.GuestBook {
 
   .navbar .navbar-nav .nav-link {
     margin-left: 5px;
-    font-size: 14pt;
     padding: 5px;
+    font-size: 14pt;
   }
 
   /* Main title */
@@ -288,23 +302,18 @@ div.GuestBook {
   }
 
   div.PageContent {
-    font-size: 11pt;
+    font-size: 12pt;
   }
 
   .PageNavigation {
     font-size: 12pt;
-  }
-
-  .Copyright {
-    font-size: 10pt;
-    margin: 5px 0 15px 0;
+    padding: 5px 10px;
   }
 
   div.SectionText {
     line-height: 150%;
   }
 }
-
 
 /* bootstrap sm width */
 @media (min-width: 576px) {
@@ -321,7 +330,8 @@ div.GuestBook {
 @media (min-width: 768px) {
   /* Navbar navigation links */
   .navbar .navbar-nav .nav-link {
-    font-size: 18pt;
+    font-size: 16pt;
+    padding: 3px 8px;
   }
 
   div.PageContent,
