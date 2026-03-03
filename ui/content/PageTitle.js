@@ -2,8 +2,9 @@ import {PageContext} from "./Page";
 import {useContext, useEffect, useRef, useState} from "react";
 import {useRestApi} from "../../api/RestApi";
 import EditableField from "../editor/EditableField";
-import {useEdit} from "../editor/EditProvider";
 import {useSiteContext} from "./Site";
+import {Permission, Resource} from "../../auth/Permissions";
+import {useAuth} from "../../auth/AuthProvider";
 
 /**
  * Display the page title in an <h1> tag.
@@ -19,21 +20,29 @@ import {useSiteContext} from "./Site";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function PageTitle({alwaysShow}) {
+export default function PageTitle({text, alwaysShow}) {
 
   const {error, login, pageData} = useContext(PageContext);
   const {Outline, currentPage} = useSiteContext();
   const {Pages} = useRestApi();
-  const {canEdit} = useEdit();
+  const {hasPermission} = useAuth();
 
   const [titleText, setTitleText] = useState(null);
+  const [canEdit, setCanEdit] = useState(false);
+
   useEffect(() => {
-    if (pageData) {
+    setCanEdit(hasPermission?.(Resource.PAGE, Permission.EDIT));
+  }, [setCanEdit, hasPermission]);
+
+  useEffect(() => {
+    if (text) {
+      setTitleText(text);
+    } else if (pageData) {
       setTitleText(pageData.PageTitle);
     } else if (currentPage) {
       setTitleText(currentPage.PageTitle);
     }
-  }, [pageData, currentPage, setTitleText]);
+  }, [pageData, currentPage, setTitleText, text]);
 
   function onTitleChanged({textContent, textAlign}) {
     if (pageData) {
@@ -77,6 +86,7 @@ export default function PageTitle({alwaysShow}) {
         textAlign={pageData?.PageTitleAlign}
         showEditButton={true}
         alwaysShow={alwaysShow === true}
+        canEdit={canEdit}
       />
     ) : (
       <>{(pageData?.PageTitle.length || error?.title.length || alwaysShow || login) && (
