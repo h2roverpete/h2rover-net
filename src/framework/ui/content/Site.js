@@ -1,14 +1,14 @@
 import React, {createContext, useCallback, useContext, useEffect, useState} from 'react';
 import ReactGA from 'react-ga4';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import {Route, Routes, useLocation, useNavigate} from "react-router";
 import {useRestApi} from "../../api/RestApi";
 import Logout from '../../auth/Logout';
-import {useEdit} from "../editor/EditProvider";
 import SiteEditor from "../editor/SiteEditor";
 import {Alert} from "react-bootstrap";
 import Head from "./Head";
+import {useAuth} from "../../auth/AuthProvider";
+import {Permission, Resource} from "../../auth/Permissions";
 
 /**
  * @typedef ErrorData
@@ -42,7 +42,7 @@ export default function Site(props) {
   const navigate = useNavigate();
   const location = useLocation();
   const {Sites} = useRestApi();
-  const {canEdit} = useEdit();
+  const {hasPermission} = useAuth();
 
   // states
   const [siteData, setSiteData] = useState(null);
@@ -53,13 +53,21 @@ export default function Site(props) {
   const [prevPage, setPrevPage] = useState(null);
   const [nextPage, setNextPage] = useState(null);
   const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const [canEdit, setCanEdit] = useState(false);
+  const [canBrowseProtected, setCanBrowseProtected] = useState(false);
+
+  useEffect(() => {
+    setCanEdit(hasPermission?.(Resource.SITE, Permission.EDIT));
+    setCanBrowseProtected(hasPermission?.(Resource.PAGE, Permission.BROWSE_PROTECTED));
+  }, [setCanEdit, setCanBrowseProtected, hasPermission]);
 
   const params = new URLSearchParams(window.location.search);
   let cfmPageId = parseInt(params.get('pageid'));
 
   useEffect(() => {
-    if (siteData?.SiteTheme)
-    document.body.setAttribute('data-bs-theme', siteData.SiteTheme);
+    if (siteData?.SiteTheme) {
+      document.documentElement.setAttribute('data-bs-theme', siteData.SiteTheme);
+    }
   }, [siteData]);
 
   useEffect(() => {
@@ -155,7 +163,7 @@ export default function Site(props) {
     const result = [];
     if (outlineData) {
       outlineData.map((item) => {
-        if (item.ParentID === pageId && ((!item.PageHidden) || showHidden)) {
+        if (item.ParentID === pageId && ((!item.PageHidden) || showHidden) && (!item.RequiresLogin || canBrowseProtected)) {
           result.push(item);
         }
         return item;
@@ -204,17 +212,17 @@ export default function Site(props) {
       for (const page of outlineData) {
         if (page.PageID === currentPage.PageID) {
           current = page;
-        } else if (current && !page.HasChildren && !page.PageHidden) {
+        } else if (current && !page.HasChildren && !page.PageHidden && (!page.RequiresLogin || hasPermission(Resource.PAGE, Permission.BROWSE_PROTECTED))) {
           after = page;
           break;
-        } else if (!page.HasChildren && !page.PageHidden) {
+        } else if (!page.HasChildren && !page.PageHidden && (!page.RequiresLogin || hasPermission(Resource.PAGE, Permission.BROWSE_PROTECTED))) {
           before = page;
         }
       }
       setPrevPage(before);
       setNextPage(after);
     }
-  }, [outlineData, currentPage]);
+  }, [outlineData, currentPage, hasPermission]);
 
 
   /**
@@ -223,16 +231,16 @@ export default function Site(props) {
    */
   function updateOutlineData(pageData) {
     if (outlineData) {
-      const newOutlineData = [];
-      outlineData.map((item) => {
-        newOutlineData.push(item);
+      const newOutlineData = outlineData.map((item) => {
         if (item.PageID === pageData.PageID) {
-          item.PageTitle = pageData.PageTitle;
-          item.NavTitle = pageData.NavTitle;
-          item.PageHidden = pageData.PageHidden;
+          return {...pageData};
+        } else {
+          return item;
         }
-        return item;
       })
+      if (pageData.PageID === currentPage?.PageID) {
+        setCurrentPage({...pageData});
+      }
       setOutlineData(buildOutline(newOutlineData));
     }
   }
@@ -355,19 +363,20 @@ export default function Site(props) {
               element={<props.pageElement pageId={cfmPageId}/>}
             />
           )}</>
-          <>{redirect ? (
+          {redirect ? (
             // redirect root for an alternate domain
             <Route
               path="/"
               element={<props.pageElement pageId={redirect.pageId}/>}
             />
-          ) : (
-            // normal root, first item in outline
-            <Route
-              path="/"
-              element={<props.pageElement pageId={outlineData[0].PageID}/>}
-            />
-          )}</>
+          ) : (<>
+            {outlineData?.length > 0 && (
+              <Route
+                path="/"
+                element={<props.pageElement pageId={outlineData[0].PageID}/>}
+              />
+            )}
+          </>)}
           {outlineData.map((page) => (
             // all pages in site outline
             <Route
